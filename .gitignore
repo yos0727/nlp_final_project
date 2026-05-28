@@ -1,3 +1,8 @@
+config.ini
 .env
 .venv/
 __pycache__/
+*.pyc
+static/resource/*.mp3
+static/resource/*.png
+!static/resource/.gitkeep

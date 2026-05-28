@@ -1,0 +1,5 @@
+[AzureSpeech]
+SPEECH_KEY = your_azure_speech_key_here
+SPEECH_REGION = eastasia
+; 繁體中文神經語音，可改為其他 Azure 支援的 voice name
+VOICE_NAME = zh-TW-HsiaoChenNeural

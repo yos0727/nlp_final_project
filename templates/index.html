@@ -56,6 +56,11 @@
             <div class="text" id="summaryText">The summary of the content</div>
         </section>
 
+        <section class="summary-title">
+            <div class="label">Sentiment</div>
+            <div class="text" id="sentimentText">—</div>
+        </section>
+
         <audio controls>
             <source src="{{ url_for('static', filename='resource/summary.mp3') }}">
         </audio>
@@ -67,7 +72,7 @@
 
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}?v=2"></script>
 
 </body>
 </html>

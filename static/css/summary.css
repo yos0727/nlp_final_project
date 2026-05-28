@@ -7,8 +7,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 10px;
+    overflow-y: auto;
+    padding: 48px 0 24px;
+    box-sizing: border-box;
 }
 
 #summaryPage .exit-button {
@@ -38,15 +41,19 @@
 }
 
 #summaryPage .image {
-    height: 75%;
-    object-fit: fill;
+    height: auto;
+    max-height: 42vh;
+    object-fit: contain;
     border: 1px solid #010101;
     display: block;
+    flex-shrink: 0;
 }
 
 #summaryPage .summary-title {
     display: flex;
-    height: 10%;
+    min-height: 52px;
+    height: auto;
+    flex-shrink: 0;
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
@@ -77,4 +84,16 @@
     align-items: center;
     padding: 0 10px;
     background-color: #ffffff;
+}
+
+#sentimentText.sentiment-positive {
+    color: #15803d;
+}
+
+#sentimentText.sentiment-neutral {
+    color: #a16207;
+}
+
+#sentimentText.sentiment-negative {
+    color: #b91c1c;
 }
