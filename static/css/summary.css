@@ -42,6 +42,7 @@
 
 #summaryPage .image {
     height: auto;
+    width: auto;
     max-height: 42vh;
     object-fit: contain;
     border: 1px solid #010101;
