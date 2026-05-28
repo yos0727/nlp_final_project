@@ -1,0 +1,4 @@
+﻿date,text,received_time,person,event,event_datetime,location,positive
+2026-01-30,恭喜你獲得錄取！我們非常期待你的加入，這是個令人興奮的好消息！,18:30,弟弟,過生日,晚上,家,Positive
+2026-01-31,今天會議取消請注意,09:00,同事,會議取消,早上,公司,Neutral
+2026-02-01,帳單嚴重逾期！若再不繳費將面臨法律追訴，請立即處理！,10:00,銀行,繳費,早上,網路,Negative
