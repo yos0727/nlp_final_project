@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Environment variables
+.env
+
+# Flask
+instance/
+*.log
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# CSV data
+gmail_data.csv
+*.csv
+
+# Generated images / resources
+static/resource/summary.png
+
+# Output files
+daily_evening_news_prompt_*.csv
+daily_evening_news_result_*.csv
+gmail_mapping_result_*.csv
+keyword_result_*.csv
+wordcloud_*.png
+
+# Matplotlib cache
+.matplotlib/
