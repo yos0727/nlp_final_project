@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendar SPA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/calendar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/summary.css') }}">
+</head>
+
+<body>
+
+    <!-- CALENDAR PAGE -->
+    <div id="calendarPage" class="page-wrapper">
+
+        <header class="page-header">
+            <h1>Calendar View</h1>
+        </header>
+
+        <main class="calendar-card">
+
+            <section class="calendar-title">
+                <div class="nav-btn" id="prev">◀</div>
+                <div id="yearLabel"></div>
+                <div>/</div>
+                <div id="monthLabel"></div>
+                <div class="nav-btn" id="next">▶</div>
+            </section>
+
+            <div class="calendar-weekdays">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+
+            <div id="calendarGrid" class="calendar-grid"></div>
+
+        </main>
+    </div>
+
+    <!-- SUMMARY PAGE -->
+    <div id="summaryPage" class="page-wrapper">
+        <div id="exitSummary" class="exit-button">X</div>
+
+        <img src="{{ url_for('static', filename='resource/summary.png') }}"
+            alt="Summary Image"
+            class="image">
+
+        <section class="summary-title">
+            <div class="label">Summary</div>
+            <div class="text" id="summaryText">The summary of the content</div>
+        </section>
+
+        <audio controls>
+            <source src="{{ url_for('static', filename='resource/summary.mp3') }}">
+        </audio>
+    </div>
+
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>

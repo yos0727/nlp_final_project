@@ -1,0 +1,80 @@
+#summaryPage {
+    display: none;
+}
+
+#summaryPage.active {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#summaryPage .exit-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+    background-color: #ffffff93;
+    border: 1px solid #010101;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#summaryPage .exit-button:hover {
+    background-color: #f94e4e;
+    color: #ffffff;
+}
+
+#summaryPage .image,
+#summaryPage .summary-title {
+    width: 75%;
+}
+
+#summaryPage .image {
+    height: 75%;
+    object-fit: fill;
+    border: 1px solid #010101;
+    display: block;
+}
+
+#summaryPage .summary-title {
+    display: flex;
+    height: 10%;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+#summaryPage .label,
+#summaryPage .text {
+    height: 100%;
+    font-size: 24px;
+    font-weight: bold;
+    border: 1px solid #010101;
+    border-radius: 10px;
+}
+
+#summaryPage .label {
+    display: flex;
+    width: auto;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    background-color: #e0f2fe;
+}
+
+#summaryPage .text {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 10px;
+    background-color: #ffffff;
+}
