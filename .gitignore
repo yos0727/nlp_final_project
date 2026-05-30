@@ -48,3 +48,4 @@ wordcloud_*.png
 # Ignore sensitive credentials in get_data but keep other files
 get_data/credentials.json
 get_data/token.json
+get_data/credentials_web.json

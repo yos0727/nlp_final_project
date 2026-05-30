@@ -87,6 +87,12 @@
 生活活動消息
 活動提醒
 
+[category.travel]
+旅遊消息
+航班提醒
+機票相關消息
+旅遊優惠消息
+
 [category.default]
 一般消息
 日常提醒
@@ -106,3 +112,6 @@ Gmail 重點消息
 
 [keywords.activity]
 活動,音樂,迎新,聚餐,餐廳,週末
+
+[keywords.travel]
+航班,機票,旅遊,旅行,住宿,租車,Skyscanner,飛往,出發,目的地,價格上升,比較航班,收藏的航班

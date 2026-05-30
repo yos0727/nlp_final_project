@@ -43,3 +43,28 @@ body {
         transform: rotate(360deg);
     }
 }
+
+.page-actions {
+    margin-top: 16px;
+}
+
+.action-button {
+    appearance: none;
+    border: 0;
+    border-radius: 999px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #2563eb 0%, #0f172a 100%);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.24);
+}
+
+.action-button:hover {
+    filter: brightness(1.05);
+}
+
+.action-button:active {
+    transform: translateY(1px);
+}

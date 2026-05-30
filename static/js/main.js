@@ -6,6 +6,41 @@ $(function () {
 
     loadCalendar(currentYear, currentMonth);
 
+    $("#exportGmailBtn").click(function () {
+        showLoading();
+
+        fetch("/api/export-gmail", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                days: 30,
+                limit: 50,
+                primary: true
+            })
+        })
+            .then(res => res.json().then(data => ({
+                ok: res.ok,
+                data: data
+            })))
+            .then(result => {
+                hideLoading();
+
+                if (!result.ok) {
+                    alert(result.data.error || "匯出 Gmail 資料失敗");
+                    return;
+                }
+
+                alert(result.data.message || "Gmail 資料已更新");
+            })
+            .catch(error => {
+                console.error(error);
+                alert("系統發生錯誤，請稍後再試");
+                hideLoading();
+            });
+    });
+
     $("#prev").click(function () {
         currentMonth--;
 

@@ -143,7 +143,7 @@ class NewsGenerator:
     def get_category(self, row):
         """根據文字內容判斷新聞類型。"""
         text = self.clean(row.get("text", "")) + self.clean(row.get("event", ""))
-        categories = ["family", "school", "work", "money", "activity"]
+        categories = ["family", "school", "work", "money", "travel", "activity"]
 
         for category in categories:
             keyword_line = self.mapping.get("keywords." + category, [""])[0]
