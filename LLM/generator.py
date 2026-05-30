@@ -113,11 +113,11 @@ class NewsGenerator:
         """根據 positive 欄位決定新聞語氣。"""
         positive = self.clean(row.get("positive", ""))
 
-        if positive == "1":
+        if positive == "1" or positive == "Positive":
             return "tone.1"
-        elif positive == "0":
+        if positive == "0" or positive == "Neutral" or positive == "Negative":
             return "tone.0"
-        else: return "tone.default"
+        return "tone.default"
 
     def get_lead_key(self, row):
         """根據資料完整度決定導語模板。"""

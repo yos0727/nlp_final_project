@@ -4,19 +4,33 @@ import calendar
 import pandas as pd
 from flask import Flask, render_template, jsonify
 
+from sentiment import process_csv
 from Keywords.keywords import KeywordAnalyzer
 from LLM.generator import NewsGenerator
-
+from services.speech import text_to_speech
 
 app = Flask(__name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# 依照你原本程式的預設：gmail_data.csv 放在專案資料夾的上一層
 GMAIL_CSV_PATH = os.path.join(BASE_DIR, "gmail_data.csv")
+RESOURCE_DIR = os.path.join(BASE_DIR, "static", "resource")
 
-# 文字雲固定輸出到網站會讀取的位置
-WORDCLOUD_PATH = os.path.join(BASE_DIR, "static", "resource", "summary.png")
+
+def get_daily_resource_paths(year, month, day):
+    """回傳指定日期的文字雲與 MP3 路徑。"""
+    date_key = f"{year}-{month:02d}-{day:02d}"
+
+    wordcloud_filename = f"{date_key}.png"
+    audio_filename = f"{date_key}.mp3"
+
+    wordcloud_path = os.path.join(RESOURCE_DIR, wordcloud_filename)
+    audio_path = os.path.join(RESOURCE_DIR, audio_filename)
+
+    wordcloud_url = f"/static/resource/{wordcloud_filename}"
+    audio_url = f"/static/resource/{audio_filename}"
+
+    return wordcloud_path, audio_path, wordcloud_url, audio_url
+
 
 @app.route("/")
 def index():
@@ -37,46 +51,65 @@ def api_calendar(year, month):
 
 @app.route("/api/summary/<int:year>/<int:month>/<int:day>")
 def api_summary(year, month, day):
-    """
-    點日期後執行：
-    1. 先看該日期是否都已 processed=1
-    2. 若已處理，直接回傳
-    3. 若未處理，才執行 keywords 分析與文字雲
-    """
     target_date = f"{year}/{month}/{day}"
+    wordcloud_path, audio_path, wordcloud_url, audio_url = get_daily_resource_paths(
+        year, month, day
+    )
+
     df = pd.read_csv(GMAIL_CSV_PATH, encoding="utf-8-sig")
     selected_rows = df[df["date"] == target_date].fillna("")
 
-    if len(selected_rows) > 0 and "summary" in selected_rows.columns:
+    if selected_rows.empty:
+        return jsonify({
+            "error": "這一天沒有信件資料"
+        }), 404
+
+    positive_label = "Neutral"
+    positive_list = selected_rows["positive"].tolist()
+    if positive_list[0] != "":
+        positive_label = positive_list[0]
+
+    # 摘要與當天的圖片、音檔都存在時，才直接使用快取。
+    if "summary" in selected_rows.columns:
         summary_list = selected_rows["summary"].tolist()
-        summary_text = summary_list[0]
-        if summary_text != "":
+        summary_exists = summary_list[0] != ""
+        resource_files_exist = os.path.isfile(wordcloud_path) and os.path.isfile(audio_path)
+
+        if summary_exists and resource_files_exist:
             return jsonify({
-                "summary": summary_text,
-                "wordcloud_path": "static/resource/summary.png"
+                "summary": summary_list[0],
+                "wordcloud_path": wordcloud_url,
+                "audio_path": audio_url,
+                "sentiment": positive_label
             })
 
-    if len(selected_rows) > 0 and "processed" in selected_rows.columns:
-        processed_list = selected_rows["processed"].tolist()
-        processed_value = processed_list[0]
-        if processed_value == 1:
-            return jsonify({
-                "summary": "這一天已經處理過，直接顯示既有文字雲。",
-                "wordcloud_path": "static/resource/summary.png"
-            })
+    process_csv(GMAIL_CSV_PATH)
+
+    df = pd.read_csv(GMAIL_CSV_PATH, encoding="utf-8-sig")
+    selected_rows = df[df["date"] == target_date].fillna("")
+    positive_list = selected_rows["positive"].tolist()
+    if positive_list[0] != "":
+        positive_label = positive_list[0]
 
     analyzer = KeywordAnalyzer(
         csv_path=GMAIL_CSV_PATH,
-        wordcloud_path=WORDCLOUD_PATH
+        wordcloud_path=wordcloud_path
     )
     analyzer.run(target_date=target_date)
 
     generator = NewsGenerator(csv_path=GMAIL_CSV_PATH)
     result = generator.run(target_date=target_date, ask_ai=True)
 
+    try:
+        text_to_speech(result["news"], audio_path)
+    except (FileNotFoundError, ValueError, RuntimeError) as exc:
+        return jsonify({"error": str(exc)}), 500
+
     return jsonify({
         "summary": result["summary"],
-        "wordcloud_path": "static/resource/summary.png"
+        "wordcloud_path": wordcloud_url,
+        "audio_path": audio_url,
+        "sentiment": positive_label
     })
 
 

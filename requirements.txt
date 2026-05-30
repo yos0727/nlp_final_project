@@ -7,3 +7,4 @@ wordcloud
 azure-ai-textanalytics
 azure-core
 google-genai
+azure-cognitiveservices-speech
