@@ -45,5 +45,6 @@ wordcloud_*.png
 # Matplotlib cache
 .matplotlib/
 
-# Local get_data folder contains credentials and token; ignore to avoid leaking secrets
-get_data/
+# Ignore sensitive credentials in get_data but keep other files
+get_data/credentials.json
+get_data/token.json
